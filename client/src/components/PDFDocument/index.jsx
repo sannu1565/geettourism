@@ -6,11 +6,11 @@ const styles = StyleSheet.create({
   page: {
     padding: '20px',
     fontSize: '12px',
-    border: '1px solid #e2e8f0',
+    border: '5px solid #e2e8f0',
   },
   headerImage: {
     width: '100%',
-    height: 'auto',
+    height: '100px',
   },
   header: {
     fontSize: '24px',
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   leftColumn: {
-    width: '45%',
+    width: '55%',
     padding: '10px',
     border: '1px solid #e2e8f0',
     borderRadius: '10px',
@@ -37,6 +37,8 @@ const styles = StyleSheet.create({
   },
   text: {
     marginBottom: '10px',
+    fontSize: '20px',
+    fontWeight: 'bold',
   },
   greeting: {
     marginTop: '20px',

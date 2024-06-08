@@ -170,9 +170,9 @@ body: JSON.stringify({
              onChange={ (e) => setmobile(e.target.value)}
              className="w-full gap-4 font-semibold border-solid " 
                    placeholder="Mobile no" required />
-<div className="gap-3">
+<div className="gap-6">
         <label 
-           className="w-full gap-4 font-semibold border-solid ">Date of Booking</label>
+           className="w-full gap-6 font-semibold border-solid ">Date of Booking</label>
             <input type="date" id="booking" 
             name="bookingDate"
              value={dateOfBooking} 
