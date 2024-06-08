@@ -3,6 +3,9 @@ import mongooseAggregatePaginate from "mongoose-aggregate-paginate-v2";
 
 const bookingDataSchema = new Schema(
 {
+  productName:{
+    type: String 
+  },
   name:{
     type: String
   },
@@ -19,6 +22,12 @@ const bookingDataSchema = new Schema(
   {
     type: String
   },
+ amount :{
+  type : String
+ },
+dateOfBooking:{
+  type: Date
+}
 
 },
 {

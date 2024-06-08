@@ -6,7 +6,11 @@ import { contectData} from "./models/contect.model.js";
 import { bookingData } from "./models/booking.model.js";
 import Razorpay from "razorpay"
 import { Resend } from "resend";
+import nodemailer from "nodemailer"
 import cors from "cors"
+import bodyParser from "body-parser";
+
+
 
 dotenv.config({
     path: './.env'
@@ -21,6 +25,14 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 app.use(express.json());
 app.use(cors(corsOptions));
+app.use(bodyParser.json());
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
+
+
 
 app.post('/contect', async (req, res) => {
     const { name, email, mobileNo , message } = req.body;
@@ -61,8 +73,8 @@ app.post('/order', async(req ,res ) =>{
 
 
 app.post('/booking', async (req, res) => {
-  const { name, email, mobile, razorpayPaymentId, razorpayOrderId } = req.body;
-  const booking = new bookingData({ name, email, mobile, razorpayPaymentId, razorpayOrderId });
+  const { productName,name, email, mobile, razorpayPaymentId, razorpayOrderId ,amount , dateOfBooking} = req.body;
+  const booking = new bookingData({productName, name, email, mobile, razorpayPaymentId, razorpayOrderId ,amount , dateOfBooking});
   try {
     await booking.save();
     res.json(booking);
@@ -70,18 +82,41 @@ app.post('/booking', async (req, res) => {
     res.status(500).send(error);
   }
 
-  try {
-    const data = await resend.emails.send({
-      from: 'Acme <onboarding@resend.dev>',
-      to:  {email},
-      subject: 'tasting',
-      html: '<strong>it works!</strong>',
-    });
+  
+});
 
-    res.status(200).json(data);
-  } catch (error) {
-    res.status(400).json(error);
+app.post('/booking-sand', async (req, res) => {
+  const { name, email, mobile, razorpayPaymentId, razorpayOrderId, html } = req.body;
+  const transporter =  nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'kumarsannu030@gmail.com',
+      pass: process.env.EMAIL_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: 'kumarsannu030@gmail.com',
+    to: email,
+    subject: 'Payment mail',
+    text: 'Thanks for booking for this tour . we will reach out you soon for tour ',
+    
+    
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log(error);
+      if (!res.headersSent) {
+          return res.status(500).send('Error sending email');
+      }
+  } else {
+      console.log('Email sent: ' + info.response);
+      if (!res.headersSent) {
+          return res.status(200).send('Email sent successfully');
+      }
   }
+  });
 });
 
 app.get('/booking', async (req, res) => {
@@ -103,6 +138,24 @@ app.get('/contect', async (req, res) => {
   } catch (err) {
       res.status(500).json({ message: err.message });
   }
+});
+
+const users = [
+  { username: 'Sannu1565', password: 'Sannu@1565' },
+  { username: 'Sannu1234', password: 'Sannu@6699' },
+];
+
+app.post('/deshboard', async (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find (u => u.username === username && u.password === password);
+  
+  if (user) {
+    res.status(200).json({ message: 'Login successful' });
+  } else {
+    res.status(401).json({ message: 'Invalid credentials' });
+  }
+
+
 });
 
 

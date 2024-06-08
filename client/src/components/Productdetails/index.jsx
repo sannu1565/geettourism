@@ -126,7 +126,7 @@ export default function Productdetails({...porps}){
                   <div className="flex flex-row justify-start items-center gap-2.5 py-0.5">
                     <Img src="images/img_icon_20px_call.svg" alt="icon20pxcall" className="h-[20px] w-[20px]" />
                     <Text size="xs" as="p" className="!text-gray-600_02">
-                      +91 8877373259
+                      +91 9876768945
                     </Text>
                   </div>
                 </div>

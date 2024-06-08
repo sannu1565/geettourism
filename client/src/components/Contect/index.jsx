@@ -18,23 +18,32 @@ const Contact = () => {
   }, []);
 
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">Contact Form</h2>
-      
-      <ul className=' '>
-        {contectData.map(contectData => (
-         <div key={contectData.id} className="mb-2">
+    <><div>
+      <h3 className='text-xl flex bg-gradient-to-r from-yellow-400 via-purple-500 to-pink-500 bg-clip-text text-transparent font-bold '>Contect Details</h3>
+    </div><div className="overflow-x-auto">
 
-            <li> Name : {contectData.name}</li>
-            <li> Email : {contectData.email}</li>
-            <li> MobileNo : {contectData.mobileNo}</li>
-            <li> message : {contectData.message}</li>
-         </div>
-         
-        ))}
-      </ul>
-      
-    </div>
+        <table className='min-w-full border-collapse border border-gray-200'>
+          <thead>
+            <tr className='bg-gray-100'>
+              <th className="border border-gray-200 px-4 py-2">Name</th>
+              <th className="border border-gray-200 px-4 py-2">Email</th>
+              <th className="border border-gray-200 px-4 py-2">Mobile</th>
+              <th className="border border-gray-200 px-4 py-2">Message</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contectData.map(contectData => (
+              <tr key={contectData.id} className="odd:bg-white even:bg-gray-50">
+                <td className="border border-gray-200 px-4 py-2">{contectData.name}</td>
+                <td className="border border-gray-200 px-4 py-2">{contectData.email}</td>
+                <td className="border border-gray-200 px-4 py-2">{contectData.mobileNo}</td>
+                <td className="border border-gray-200 px-4 py-2">{contectData.message}</td>
+
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div></>
   );
 };
 

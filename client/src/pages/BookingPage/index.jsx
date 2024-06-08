@@ -6,17 +6,26 @@ import Header from "../../components/Header";
 import Bookingcard from "components/Bookingcard";
 import  { useState } from 'react';
 import axios from "axios";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Razorpay from "razorpay";
-
-
-
+import{useParams} from 'react-router-dom';
+import Products from "ListingData";
+import { PDFDownloadLink } from '@react-pdf/renderer';
+import PDFDocument from "components/PDFDocument";
+// import { renderToStaticMarkup } from 'react-dom/server';
 
 export default function ReservationPage() { 
+  const { id } = useParams();
+  const product = Products.find(p => p.id === parseInt(id));
+  
+
+
 const [name ,setname] = useState('');
 const [email ,setemail] = useState('');
 const [mobile ,setmobile] = useState('');
+const[dateOfBooking , setdateOfBooking] = useState('')
+const [paymentSuccessful, setPaymentSuccessful] = useState(false);
+const [pdfData, setPdfData] = useState(null);
+
 
 const PaymentHandler = async(e)=>{
   const amount = 499900;
@@ -40,7 +49,7 @@ body: JSON.stringify({
 
   var options = {
     key:'rzp_test_VA3p4eyiVuw53g',
-    amount,
+    amount : product.price *100,
     currency,
     name: 'Geet tourism',
     description: 'Test Transaction',
@@ -48,16 +57,27 @@ body: JSON.stringify({
     Image:"/images/geet TOURISM.png",
     handler: async function (response) {
       const paymentData = {
+        productName : product.name,
+        productImage : product.imageUrl,
         name,
         email,
         mobile,
         razorpayPaymentId: response.razorpay_payment_id,
         razorpayOrderId: response.razorpay_order_id,
+        amount :product.price,
+        dateOfBooking,
+
+        
       };
       alert(`Payment successful. Payment ID: ${response.razorpay_payment_id}`);
+      setPaymentSuccessful(true);
+      setPdfData(paymentData);
 
       await axios.post('http://localhost:3001/booking', paymentData);
         alert('Payment Successful');
+
+      await axios.post('http://localhost:3001/booking-sand', paymentData);
+        alert(' Sand Successful');
     },
  "prefill": {
         name,
@@ -84,6 +104,9 @@ body: JSON.stringify({
   })
           rzp1.open();
           e.preventDefault();
+
+
+
 };
  return (
  <>
@@ -97,7 +120,7 @@ body: JSON.stringify({
    <div className="flex flex-row justify-center w-full">
             <div className="flex flex-col items-center justify-start w-full gap-11 md:px-5 max-w-[1200px]">
               <div className="flex flex-col items-center justify-start w-full pt-0.5 gap-[15px]">
-                <Heading size="6xl" as="h1" className="tracking-[-1.08px] text-center bg-clip-text">
+                <Heading size="6xl" as="h1" className="tracking-[-1.08px] text-center bg-clip-text text-xl flex bg-gradient-to-r from-yellow-500 via-purple-800 to-pink-700 text-transparent font-bold">
                   Book Your Trip
                 </Heading>
               </div>
@@ -147,19 +170,45 @@ body: JSON.stringify({
              onChange={ (e) => setmobile(e.target.value)}
              className="w-full gap-4 font-semibold border-solid " 
                    placeholder="Mobile no" required />
-                  
-                     
-                       
+<div className="gap-3">
+        <label 
+           className="w-full gap-4 font-semibold border-solid ">Date of Booking</label>
+            <input type="date" id="booking" 
+            name="bookingDate"
+             value={dateOfBooking} 
+             onChange={ (e)=>setdateOfBooking(e.target.value) }
+             className="w-full gap-4 font-semibold border-solid " 
+                   placeholder="booking date" required />
+                   </div>  
+                      
                     </div>
                   </div>
                  
-                  <Button  type="submit" onClick={PaymentHandler} size="2xl" shape="round" className="w-full sm:px-5 font-semibold">
+                  <Button  type="submit" onClick={PaymentHandler}
+                disabled={!email} size="2xl" shape="round" className="w-full sm:px-5 font-semibold">
                     Book Now
                   </Button>
+
+                  {/* PDF CREATE */}
+
+               {paymentSuccessful && pdfData &&(
+                <PDFDownloadLink
+                document= {<PDFDocument data={pdfData}/>}
+                fileName="booking_details.pdf"
+                className="bg-blue-500 text-white p-2 rounded"
+              >
+                {({ blob, url, loading, error }) =>
+                  loading ? 'Loading document...' : 'Download PDF'
+                }
+              </PDFDownloadLink>
+                  )}
+   
                 </div>
                </div>
+               
               
-        </div>     
+        </div>  
+
 </div>          
 </div>       
  </div>
