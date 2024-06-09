@@ -69,15 +69,16 @@ body: JSON.stringify({
 
         
       };
-      alert(`Payment successful. Payment ID: ${response.razorpay_payment_id}`);
-      setPaymentSuccessful(true);
-      setPdfData(paymentData);
-
+      
       await axios.post('http://localhost:3001/booking', paymentData);
         alert('Payment Successful');
 
       await axios.post('http://localhost:3001/booking-sand', paymentData);
         alert(' Sand Successful');
+      
+       alert(`Payment successful. Payment ID: ${response.razorpay_payment_id}`);
+        setPaymentSuccessful(true);
+        setPdfData(paymentData);
     },
  "prefill": {
         name,
