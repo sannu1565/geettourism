@@ -7,7 +7,7 @@ const PaymentDetails = () => {
   useEffect(() => {
     const fetchBookingData= async () => {
         try {
-            const response = await axios.get('http://localhost:3001/booking');
+            const response = await axios.get('https://geettourism.onrender.com/booking');
             setBookingData(response.data);
         } catch (error) {
             console.error('Error fetching data:', error);
