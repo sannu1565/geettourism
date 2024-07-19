@@ -6,11 +6,11 @@ const styles = StyleSheet.create({
   page:{
     margin : "20px",
     fontSize: '12px',
-    border: '1px solid orange',
+    
   },
   headerImage: {
     width: '100%',
-    height: '50px',
+    
   },
   header: {
     fontSize: '24px',
