@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "build": "cd client && npm install && npm run build"
+    "build": "webpack --config webpack.config.js"
   },
   "keywords": [],
   "author": "Sannu",
