@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "engines": {
-    "node": "your-node-version"
+    "node": ">=12"
   },
   "scripts": {
     "start": "node index.js",
