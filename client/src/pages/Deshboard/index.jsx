@@ -16,7 +16,7 @@ export default function deshboard() {
       const password = prompt('Enter your password:');
 
       try {
-        const responce =  await axios.post('http://localhost:3001/deshboard', {username , password});
+        const responce =  await axios.post('https://geettourism.onrender.com/deshboard', {username , password});
          const data = await responce.json()
         if (responce.ok) {
           alert(data.message);
