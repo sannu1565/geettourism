@@ -3,15 +3,14 @@ import { Document, Page, Image, Text, View, StyleSheet } from '@react-pdf/render
 import 'tailwindcss/tailwind.css';
 
 const styles = StyleSheet.create({
-  page: {
+  page:{
     margin : "20px",
-    padding: '20px',
     fontSize: '12px',
     border: '1px solid orange',
   },
   headerImage: {
     width: '100%',
-    height: '100px',
+    height: '50px',
   },
   header: {
     fontSize: '24px',
@@ -24,7 +23,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
-    columnGap : '5px',
+    
   },
   leftColumn: {
     width: '40%',
@@ -54,7 +53,7 @@ const PDFDocument = ({ data }) => (
   <Document>
     <Page  className = "gap-7" style={styles.page}>
       <Image style={styles.headerImage} src="/images/geettour.png" />
-      <Text className ="bg-orange-700  font-manrope  font-semibold " style={styles.header}>BOOKING RECEIPT </Text>
+      <Text style={styles.header}>BOOKING RECEIPT </Text>
       <View style={styles.section}>
         <View style={styles.leftColumn}>
           <Image className="w-full h-auto mb-4" src={data.productImage} alt="" />
