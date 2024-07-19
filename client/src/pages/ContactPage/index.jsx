@@ -22,7 +22,7 @@ export default function ContactPagePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3001/contect/', {name, email ,mobileNo ,message});
+      await axios.post('https://geettourism.onrender.com/contect/', {name, email ,mobileNo ,message});
       alert('Form submitted successfully');
     } catch (error) {
       alert('Error submitting form');
