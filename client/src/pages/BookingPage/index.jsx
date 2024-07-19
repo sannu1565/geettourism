@@ -31,7 +31,7 @@ const PaymentHandler = async(e)=>{
   const amount = 499900;
   const currency = 'INR';
   const receiptId = '13333333345';
-  const response = await fetch('http://localhost:3001/order',{
+  const response = await fetch('https://geettourism.onrender.com/order',{
    method: 'POST',
    headers: {
    'content-Type': 'application/json',  
@@ -74,10 +74,10 @@ body: JSON.stringify({
       setPaymentSuccessful(true);
       setPdfData(paymentData);
 
-      await axios.post('http://localhost:3001/booking', paymentData);
+      await axios.post('https://geettourism.onrender.com/booking', paymentData);
         alert('Payment Successful');
        
-      await axios.post('http://localhost:3001/booking-sand', paymentData);
+      await axios.post('https://geettourism.onrender.com/booking-sand', paymentData);
         alert(' Sand Successful');
         
       
